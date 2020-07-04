@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <deep-form :item="forms"></deep-form>
+    </div>
+
+    <script type="text/x-template" id="deepForm">
+        <ul>
+            <li v-for="(form, formIndex) in item" :key="formIndex">
+                {{ form[Object.keys(form)[0]] }}
+                <deep-form :item="form[Object.keys(form)[1]]"></deep-form>
+            </li>
+        </ul>
+    </script>
+</body>
+
+<script>
+    Vue.component('deep-form', {
+        props: {
+            item: { type: Array }
+        },
+        template: '#deepForm'
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            forms: [
+                {
+                    formName: "form1",
+                    tabs: [
+                        {
+                            tabName: "tab1",
+                            rows: [
+                                {
+                                    rowName: "row1",
+                                    cols: [{ colName: "col1" }]
+                                }
+                            ]
+                        },
+                        {
+                            tabName: "tab2",
+                            rows: [
+                                {
+                                    rowName: "row1",
+                                    cols: [{ colName: "col1" }, { colName: "col2" }]
+                                },
+                                {
+                                    rowName: "row2",
+                                    cols: [{ colName: "col1" }, { colName: "col2" }]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    })
+</script>
+
+</html>
